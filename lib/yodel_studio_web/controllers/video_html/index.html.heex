@@ -11,7 +11,10 @@
   <.table id="videos" rows={@videos} row_click={&JS.navigate(~p"/videos/#{&1}")}>
     <:col :let={video} label="Title">{video.title}</:col>
     <:col :let={video} label="Slug">{video.slug}</:col>
-    <:col :let={video} label="Active">{video.active}</:col>
+    <:col :let={video} label="Active">
+      <.icon :if={video.active} name="hero-check" />
+      <.icon :if={!video.active} name="hero-x-mark" />
+    </:col>
     <:action :let={video}>
       <div class="sr-only">
         <.link navigate={~p"/videos/#{video}"}>Show</.link>
