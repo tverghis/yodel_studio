@@ -10,6 +10,7 @@ defmodule YodelStudio.Application do
     children = [
       YodelStudioWeb.Telemetry,
       YodelStudio.Repo,
+      YodelStudio.ViewCounter.Server,
       {DNSCluster, query: Application.get_env(:yodel_studio, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: YodelStudio.PubSub},
       # Start a worker by calling: YodelStudio.Worker.start_link(arg)
