@@ -1,7 +1,7 @@
 <.form :let={f} for={@changeset} action={@action}>
   <.input field={f[:title]} type="text" label="Title" />
   <.input field={f[:slug]} type="text" label="Slug" />
-  <.input field={f[:active]} type="checkbox" label="Active" checked />
+  <.input field={f[:active]} type="checkbox" label="Active" />
   <footer>
     <.button variant="primary">Save Video</.button>
     <.button :if={@return_to} href={@return_to}>Cancel</.button>
