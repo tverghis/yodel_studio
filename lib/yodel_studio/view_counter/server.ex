@@ -3,6 +3,8 @@ defmodule YodelStudio.ViewCounter.Server do
   alias YodelStudio.Catalog
   alias YodelStudio.ViewCounter.YtClient
 
+  require Logger
+
   # Public interface
   # -------------------
   def get_total_views() do
@@ -43,7 +45,12 @@ defmodule YodelStudio.ViewCounter.Server do
   # Private functions
   # -------------------
   defp refresh_view_counts(%{total_views: total_views}) do
-    video_ids = Catalog.list_videos() |> Enum.map(fn video -> video.slug end)
+    video_ids =
+      Catalog.list_videos()
+      |> Enum.filter(& &1.active)
+      |> Enum.map(& &1.slug)
+
+    Logger.debug("Refreshing view counts for #{Enum.count(video_ids)} videos.")
 
     case YtClient.get_view_counts(video_ids) do
       {:ok, counts} -> counts
