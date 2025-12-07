@@ -1,7 +1,7 @@
 <Layouts.app flash={@flash}>
   <.header>
-    Video {@video.id}
-    <:subtitle>This is a video record from your database.</:subtitle>
+    {@video.title}
+    <:subtitle>{YodelStudio.Catalog.Video.youtube_url(@video)}</:subtitle>
     <:actions>
       <.button navigate={~p"/videos"}>
         <.icon name="hero-arrow-left" />
@@ -13,11 +13,4 @@
   </.header>
 
   <ReqEmbed.embed url={YodelStudio.Catalog.Video.youtube_url(@video)} class="aspect-video" />
-
-  <.list>
-    <:item title="Title">{@video.title}</:item>
-    <:item title="Slug">{@video.slug}</:item>
-    <:item title="Active">{@video.active}</:item>
-    <:item title="URL">{YodelStudio.Catalog.Video.youtube_url(@video)}</:item>
-  </.list>
 </Layouts.app>
