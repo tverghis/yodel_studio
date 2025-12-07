@@ -1,0 +1,26 @@
+<Layouts.app flash={@flash}>
+  <.header>
+    Listing Videos
+    <:actions>
+      <.button href={~p"/videos/new"}>
+        <.icon name="hero-plus" /> New Video
+      </.button>
+    </:actions>
+  </.header>
+
+  <.table id="videos" rows={@videos} row_click={&JS.navigate(~p"/videos/#{&1}")}>
+    <:col :let={video} label="Slug">{video.slug}</:col>
+    <:col :let={video} label="Active">{video.active}</:col>
+    <:action :let={video}>
+      <div class="sr-only">
+        <.link navigate={~p"/videos/#{video}"}>Show</.link>
+      </div>
+      <.link navigate={~p"/videos/#{video}/edit"}>Edit</.link>
+    </:action>
+    <:action :let={video}>
+      <.link href={~p"/videos/#{video}"} method="delete" data-confirm="Are you sure?">
+        Delete
+      </.link>
+    </:action>
+  </.table>
+</Layouts.app>
