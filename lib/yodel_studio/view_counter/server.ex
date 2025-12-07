@@ -1,7 +1,7 @@
 defmodule YodelStudio.ViewCounter.Server do
   use GenServer
   alias YodelStudio.Catalog
-  alias YodelStudio.ViewCounter.YtClient
+  alias YodelStudio.YouTube
 
   require Logger
 
@@ -52,7 +52,7 @@ defmodule YodelStudio.ViewCounter.Server do
 
     Logger.debug("Refreshing view counts for #{Enum.count(video_ids)} videos.")
 
-    case YtClient.get_view_counts(video_ids) do
+    case YouTube.Client.get_view_counts(video_ids) do
       {:ok, counts} -> counts
       _ -> total_views
     end

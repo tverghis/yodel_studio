@@ -1,8 +1,8 @@
-defmodule YodelStudio.ViewCounter.YtClient do
+defmodule YodelStudio.YouTube.Client do
   require Logger
 
   def get_view_counts(video_ids) do
-    case Req.get(construct_url(video_ids)) do
+    case Req.get(construct_url(video_ids, "statistics", "items/statistics/viewCount")) do
       {:ok, resp} ->
         handle_resp(resp)
 
@@ -12,10 +12,10 @@ defmodule YodelStudio.ViewCounter.YtClient do
     end
   end
 
-  defp construct_url(video_ids) do
+  defp construct_url(video_ids, part, fields) do
     ids = "id=" <> Enum.join(video_ids, ",")
-    part = "&part=statistics"
-    fields = "&fields=items/statistics/viewCount"
+    part = "&part=" <> part
+    fields = "&fields=" <> fields
     key = "&key=" <> Application.fetch_env!(:yodel_studio, :yt_api_key)
 
     "https://www.googleapis.com/youtube/v3/videos?" <> ids <> part <> fields <> key
