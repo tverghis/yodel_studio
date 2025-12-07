@@ -1,6 +1,7 @@
 defmodule YodelStudio.ViewCounter.Server do
   use GenServer
   alias YodelStudio.Catalog
+  alias YodelStudio.ViewCounter.YtClient
 
   # Public interface
   # -------------------
@@ -16,18 +17,37 @@ defmodule YodelStudio.ViewCounter.Server do
 
   @impl true
   def init(_) do
-    :timer.send_interval(:timer.seconds(5), :stats)
-    {:ok, %{total_views: 0}}
+    refresh_interval = Application.fetch_env!(:yodel_studio, :counts_refresh_interval)
+    :timer.send_interval(refresh_interval, :stats)
+
+    {:ok, %{total_views: 0}, {:continue, nil}}
+  end
+
+  @impl true
+  def handle_continue(_, state) do
+    initial_view_counts = refresh_view_counts(state)
+    {:noreply, %{state | total_views: initial_view_counts}}
   end
 
   @impl true
   def handle_info(:stats, state) do
-    Catalog.list_videos() |> Enum.each(fn video -> IO.puts("#{video.title}") end)
-    {:noreply, state}
+    new_total_views = refresh_view_counts(state)
+    {:noreply, %{state | total_views: new_total_views}}
   end
 
   @impl true
   def handle_call(:get_total_views, _, %{total_views: total_views} = state) do
     {:reply, total_views, state}
+  end
+
+  # Private functions
+  # -------------------
+  defp refresh_view_counts(%{total_views: total_views}) do
+    video_ids = Catalog.list_videos() |> Enum.map(fn video -> video.slug end)
+
+    case YtClient.get_view_counts(video_ids) do
+      {:ok, counts} -> counts
+      _ -> total_views
+    end
   end
 end
