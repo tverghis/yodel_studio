@@ -12,5 +12,15 @@
     </:actions>
   </.header>
 
+  <div
+    :if={!@video.active}
+    class={[
+      "alert alert-warning text-wrap"
+    ]}
+  >
+    <.icon name="hero-exclamation-circle" class="size-5 shrink-0" />
+    This video's statistics are not being counted.
+  </div>
+
   <ReqEmbed.embed url={YodelStudio.Catalog.Video.youtube_url(@video)} class="aspect-video" />
 </Layouts.app>
