@@ -20,6 +20,16 @@ if System.get_env("PHX_SERVER") do
   config :yodel_studio, YodelStudioWeb.Endpoint, server: true
 end
 
+yt_api_key =
+  System.get_env("YT_API_KEY") ||
+    raise """
+    environment variable YT_API_KEY is missing.
+    """
+
+config :yodel_studio,
+  yt_api_key: yt_api_key,
+  counts_refresh_interval: :timer.hours(1)
+
 config :yodel_studio, YodelStudioWeb.Endpoint,
   http: [port: String.to_integer(System.get_env("PORT", "4000"))]
 
