@@ -3,6 +3,7 @@ defmodule YodelStudio.Catalog.Video do
   import Ecto.Changeset
 
   schema "videos" do
+    field :title, :string
     field :slug, :string
     field :active, :boolean, default: false
 
@@ -12,7 +13,7 @@ defmodule YodelStudio.Catalog.Video do
   @doc false
   def changeset(video, attrs) do
     video
-    |> cast(attrs, [:slug, :active])
-    |> validate_required([:slug, :active])
+    |> cast(attrs, [:title, :slug, :active])
+    |> validate_required([:title, :slug, :active])
   end
 end
