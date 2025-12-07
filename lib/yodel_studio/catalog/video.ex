@@ -16,4 +16,8 @@ defmodule YodelStudio.Catalog.Video do
     |> cast(attrs, [:title, :slug, :active])
     |> validate_required([:title, :slug, :active])
   end
+
+  def youtube_url(video) do
+    "https://youtube.com/watch?v=" <> video.slug
+  end
 end

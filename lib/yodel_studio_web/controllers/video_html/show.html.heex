@@ -12,9 +12,12 @@
     </:actions>
   </.header>
 
+  <ReqEmbed.embed url={YodelStudio.Catalog.Video.youtube_url(@video)} class="aspect-video" />
+
   <.list>
     <:item title="Title">{@video.title}</:item>
     <:item title="Slug">{@video.slug}</:item>
     <:item title="Active">{@video.active}</:item>
+    <:item title="URL">{YodelStudio.Catalog.Video.youtube_url(@video)}</:item>
   </.list>
 </Layouts.app>
