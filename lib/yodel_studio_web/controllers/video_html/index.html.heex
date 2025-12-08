@@ -13,9 +13,9 @@
       <.icon :if={video.active} name="hero-check" />
       <.icon :if={!video.active} name="hero-x-mark" />
     </:col>
+    <:col :let={video} label="Channel">{video.channel_name}</:col>
     <:col :let={video} label="Title">{video.title}</:col>
     <:col :let={video} label="Slug">{video.slug}</:col>
-    <:col :let={video} label="Channel">{video.channel_name}</:col>
     <:action :let={video}>
       <div class="sr-only">
         <.link navigate={~p"/videos/#{video}"}>Show</.link>

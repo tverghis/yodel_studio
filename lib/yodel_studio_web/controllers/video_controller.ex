@@ -6,7 +6,10 @@ defmodule YodelStudioWeb.VideoController do
   alias YodelStudio.Catalog.Video
 
   def index(conn, _params) do
-    videos = Catalog.list_videos()
+    videos =
+      Catalog.list_videos()
+      |> Enum.sort_by(fn video -> video.channel_name end)
+
     render(conn, :index, videos: videos)
   end
 
