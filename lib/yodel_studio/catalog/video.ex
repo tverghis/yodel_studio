@@ -7,7 +7,7 @@ defmodule YodelStudio.Catalog.Video do
     field :slug, :string
     field :active, :boolean, default: false
     field :channel_name, :string
-    field :channel_id, :string, default: "*"
+    field :channel_id, :string
 
     timestamps(type: :utc_datetime)
   end

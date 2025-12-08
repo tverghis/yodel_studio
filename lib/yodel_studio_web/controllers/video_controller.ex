@@ -1,6 +1,7 @@
 defmodule YodelStudioWeb.VideoController do
   use YodelStudioWeb, :controller
 
+  alias YodelStudio.YouTube
   alias YodelStudio.Catalog
   alias YodelStudio.Catalog.Video
 
@@ -15,8 +16,32 @@ defmodule YodelStudioWeb.VideoController do
   end
 
   def create(conn, %{"video" => video_params}) do
+    %{"slug" => slug} = video_params
+
+    case YouTube.Client.get_video_details([slug]) do
+      {:ok, [detail]} ->
+        video_params =
+          Map.merge(video_params, %{
+            "channel_id" => detail["channelId"],
+            "channel_name" => detail["channelTitle"],
+            "title" => detail["title"]
+          })
+
+        create_video(conn, video_params)
+
+      _ ->
+        conn
+        |> put_flash(:error, "Failed to fetch video details.")
+        |> redirect(to: ~p"/videos")
+    end
+  end
+
+  defp create_video(conn, video_params) do
     case Catalog.create_video(video_params) do
       {:ok, video} ->
+        IO.puts("created video successfully")
+        IO.inspect(video)
+
         conn
         |> put_flash(:info, "Video created successfully.")
         |> redirect(to: ~p"/videos/#{video}")
