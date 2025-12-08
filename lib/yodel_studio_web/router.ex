@@ -22,9 +22,11 @@ defmodule YodelStudioWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", YodelStudioWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", YodelStudioWeb do
+    pipe_through :api
+
+    get "/view_count", ViewCountController, :index
+  end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:yodel_studio, :dev_routes) do
