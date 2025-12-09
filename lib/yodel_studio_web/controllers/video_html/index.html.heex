@@ -18,6 +18,9 @@
     </:col>
     <:col :let={video} label="Channel">{video.channel_name}</:col>
     <:col :let={video} label="Title">{video.title}</:col>
+    <:col :let={video} label="Published">
+      {Calendar.strftime(video.published_at, "%B %d, %Y")}
+    </:col>
     <:action :let={video}>
       <div class="sr-only">
         <.link navigate={~p"/videos/#{video}"}>Show</.link>

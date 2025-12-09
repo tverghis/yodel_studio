@@ -15,7 +15,8 @@ YodelStudio.Repo.insert!(%YodelStudio.Catalog.Video{
   slug: "J3w0acXJeRE",
   active: true,
   channel_name: "Balticsalmon",
-  channel_id: "UCRAtYRe8tPynWadDbAu30TQ"
+  channel_id: "UCRAtYRe8tPynWadDbAu30TQ",
+  published_at: DateTime.utc_now() |> DateTime.truncate(:second)
 })
 
 YodelStudio.Repo.insert!(%YodelStudio.Catalog.Video{
@@ -23,5 +24,6 @@ YodelStudio.Repo.insert!(%YodelStudio.Catalog.Video{
   slug: "Flm4byJT5og",
   active: true,
   channel_name: "Mysterious Zim",
-  channel_id: "UCb86Gv7SIIoiKDSIrpEDQQQ"
+  channel_id: "UCb86Gv7SIIoiKDSIrpEDQQQ",
+  published_at: DateTime.utc_now() |> DateTime.truncate(:second)
 })

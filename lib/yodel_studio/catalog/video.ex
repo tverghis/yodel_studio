@@ -8,6 +8,7 @@ defmodule YodelStudio.Catalog.Video do
     field :active, :boolean, default: false
     field :channel_name, :string
     field :channel_id, :string
+    field :published_at, :utc_datetime
 
     timestamps(type: :utc_datetime)
   end
@@ -15,8 +16,8 @@ defmodule YodelStudio.Catalog.Video do
   @doc false
   def changeset(video, attrs) do
     video
-    |> cast(attrs, [:title, :slug, :active, :channel_name, :channel_id])
-    |> validate_required([:title, :slug, :active, :channel_name, :channel_id])
+    |> cast(attrs, [:title, :slug, :active, :channel_name, :channel_id, :published_at])
+    |> validate_required([:title, :slug, :active, :channel_name, :channel_id, :published_at])
     |> unique_constraint(:slug)
   end
 

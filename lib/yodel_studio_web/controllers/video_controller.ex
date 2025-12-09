@@ -25,12 +25,15 @@ defmodule YodelStudioWeb.VideoController do
 
     case YouTube.Client.get_video_details([slug]) do
       {:ok, [detail]} ->
+        {:ok, published_at, _} = DateTime.from_iso8601(detail["publishedAt"])
+
         video_params =
           Map.merge(video_params, %{
             "slug" => slug,
             "channel_id" => detail["channelId"],
             "channel_name" => detail["channelTitle"],
-            "title" => detail["title"]
+            "title" => detail["title"],
+            "published_at" => published_at
           })
 
         create_video(conn, video_params)

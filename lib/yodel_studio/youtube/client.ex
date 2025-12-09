@@ -14,7 +14,7 @@ defmodule YodelStudio.YouTube.Client do
 
   def get_video_details(video_ids) do
     part = "snippet"
-    fields = "items(snippet(channelId,channelTitle,title))"
+    fields = "items(snippet(channelId,channelTitle,title,publishedAt))"
 
     # TODO: can probably DRY this response handling code
     case Req.get(construct_url(video_ids, part, fields)) do
