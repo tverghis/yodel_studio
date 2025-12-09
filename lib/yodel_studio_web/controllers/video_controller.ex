@@ -20,11 +20,13 @@ defmodule YodelStudioWeb.VideoController do
 
   def create(conn, %{"video" => video_params}) do
     %{"slug" => slug} = video_params
+    slug = String.trim(slug)
 
     case YouTube.Client.get_video_details([slug]) do
       {:ok, [detail]} ->
         video_params =
           Map.merge(video_params, %{
+            "slug" => slug,
             "channel_id" => detail["channelId"],
             "channel_name" => detail["channelTitle"],
             "title" => detail["title"]
