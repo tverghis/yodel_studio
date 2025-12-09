@@ -1,6 +1,11 @@
 <Layouts.app flash={@flash}>
   <.header :if={@videos != []}>
     Videos
+    <:actions>
+      <.button href={~p"/videos/new"}>
+        <.icon name="hero-plus" /> Import Video
+      </.button>
+    </:actions>
   </.header>
 
   <.table
