@@ -1,6 +1,7 @@
 defmodule YodelStudioWeb.VideoController do
   use YodelStudioWeb, :controller
 
+  alias Ecto.Changeset
   alias YodelStudio.YouTube
   alias YodelStudio.Catalog
   alias YodelStudio.Catalog.Video
@@ -35,9 +36,14 @@ defmodule YodelStudioWeb.VideoController do
         create_video(conn, video_params)
 
       _ ->
+        changeset =
+          %Video{}
+          |> Video.changeset(video_params)
+          |> Changeset.add_error(:slug, "Failed to fetch video details.")
+          |> Map.put(:action, :validate)
+
         conn
-        |> put_flash(:error, "Failed to fetch video details.")
-        |> redirect(to: ~p"/videos")
+        |> render(:new, changeset: changeset)
     end
   end
 
