@@ -8,10 +8,15 @@
     </:actions>
   </.header>
 
-  <.table id="videos" rows={@videos} row_click={&JS.navigate(~p"/videos/#{&1}")}>
-    <:col :let={video} label="Active">
-      <.icon :if={video.active} name="hero-check" />
-      <.icon :if={!video.active} name="hero-x-mark" />
+  <.table
+    id="videos"
+    rows={@videos}
+    row_click={&JS.navigate(~p"/videos/#{&1}")}
+    variant="table-xs"
+  >
+    <:col :let={video}>
+      <div :if={video.active} class="status status-success"></div>
+      <div :if={!video.active} class="status status-error"></div>
     </:col>
     <:col :let={video} label="Channel">{video.channel_name}</:col>
     <:col :let={video} label="Title">{video.title}</:col>

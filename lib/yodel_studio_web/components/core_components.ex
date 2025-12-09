@@ -342,6 +342,7 @@ defmodule YodelStudioWeb.CoreComponents do
   attr :rows, :list, required: true
   attr :row_id, :any, default: nil, doc: "the function for generating the row id"
   attr :row_click, :any, default: nil, doc: "the function for handling phx-click on each row"
+  attr :variant, :string, default: ""
 
   attr :row_item, :any,
     default: &Function.identity/1,
@@ -360,7 +361,7 @@ defmodule YodelStudioWeb.CoreComponents do
       end
 
     ~H"""
-    <table class="table table-zebra">
+    <table class={"table #{@variant}"}>
       <thead>
         <tr>
           <th :for={col <- @col}>{col[:label]}</th>
