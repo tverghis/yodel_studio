@@ -1,6 +1,6 @@
 <Layouts.app flash={@flash}>
   <.header :if={@videos != []}>
-    Listing Videos
+    Videos
   </.header>
 
   <.table
@@ -29,7 +29,7 @@
     <h3 class="mt-2 text-sm font-semibold">No videos</h3>
     <div class="mt-6">
       <.button href={~p"/videos/new"}>
-        <.icon name="hero-plus" /> New Video
+        <.icon name="hero-plus" /> Import Video
       </.button>
     </div>
   </div>
