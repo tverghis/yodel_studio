@@ -9,6 +9,9 @@
       <.button variant="primary" navigate={~p"/videos/#{@video}/edit?return_to=show"}>
         <.icon name="hero-pencil-square" /> Edit video
       </.button>
+      <.link href={~p"/videos/#{@video}"} method="delete" data-confirm="Are you sure?">
+        <.icon name="hero-trash" />
+      </.link>
     </:actions>
   </.header>
 
