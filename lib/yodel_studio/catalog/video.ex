@@ -17,6 +17,7 @@ defmodule YodelStudio.Catalog.Video do
     video
     |> cast(attrs, [:title, :slug, :active, :channel_name, :channel_id])
     |> validate_required([:title, :slug, :active, :channel_name, :channel_id])
+    |> unique_constraint(:slug)
   end
 
   def youtube_url(video) do
