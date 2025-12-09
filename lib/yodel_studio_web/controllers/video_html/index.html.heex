@@ -1,14 +1,10 @@
 <Layouts.app flash={@flash}>
-  <.header>
+  <.header :if={@videos != []}>
     Listing Videos
-    <:actions>
-      <.button href={~p"/videos/new"}>
-        <.icon name="hero-plus" /> New Video
-      </.button>
-    </:actions>
   </.header>
 
   <.table
+    :if={@videos != []}
     id="videos"
     rows={@videos}
     row_click={&JS.navigate(~p"/videos/#{&1}")}
@@ -27,4 +23,14 @@
       </div>
     </:action>
   </.table>
+
+  <div :if={@videos == []} class="text-center py-12">
+    <.icon name="hero-video-camera" class="mx-auto h-12 w-12 text-gray-400" />
+    <h3 class="mt-2 text-sm font-semibold">No videos</h3>
+    <div class="mt-6">
+      <.button href={~p"/videos/new"}>
+        <.icon name="hero-plus" /> New Video
+      </.button>
+    </div>
+  </div>
 </Layouts.app>
