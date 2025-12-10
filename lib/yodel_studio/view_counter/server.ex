@@ -50,11 +50,16 @@ defmodule YodelStudio.ViewCounter.Server do
       |> Enum.filter(& &1.active)
       |> Enum.map(& &1.slug)
 
-    Logger.debug("Refreshing view counts for #{Enum.count(video_ids)} videos.")
+    if Enum.count(video_ids) > 0 do
+      Logger.debug("Refreshing view counts for #{Enum.count(video_ids)} videos.")
 
-    case YouTube.Client.get_view_counts(video_ids) do
-      {:ok, counts} -> counts
-      _ -> total_views
+      case YouTube.Client.get_view_counts(video_ids) do
+        {:ok, counts} -> counts
+        _ -> total_views
+      end
+    else
+      Logger.debug("No active videos.")
+      0
     end
   end
 end
