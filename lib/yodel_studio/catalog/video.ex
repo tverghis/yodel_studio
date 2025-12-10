@@ -10,6 +10,8 @@ defmodule YodelStudio.Catalog.Video do
     field :channel_id, :string
     field :published_at, :utc_datetime
 
+    belongs_to :user, YodelStudio.Accounts.User
+
     timestamps(type: :utc_datetime)
   end
 
@@ -17,7 +19,14 @@ defmodule YodelStudio.Catalog.Video do
   def changeset(video, attrs) do
     video
     |> cast(attrs, [:title, :slug, :active, :channel_name, :channel_id, :published_at])
-    |> validate_required([:title, :slug, :active, :channel_name, :channel_id, :published_at])
+    |> validate_required([
+      :title,
+      :slug,
+      :active,
+      :channel_name,
+      :channel_id,
+      :published_at
+    ])
     |> unique_constraint(:slug)
   end
 

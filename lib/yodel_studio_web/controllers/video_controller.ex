@@ -20,6 +20,7 @@ defmodule YodelStudioWeb.VideoController do
   end
 
   def create(conn, %{"video" => video_params}) do
+    user = conn.assigns.current_scope.user
     %{"slug" => slug} = video_params
     slug = String.trim(slug)
 
@@ -36,7 +37,7 @@ defmodule YodelStudioWeb.VideoController do
             "published_at" => published_at
           })
 
-        create_video(conn, video_params)
+        create_video(conn, video_params, user)
 
       _ ->
         changeset =
@@ -50,8 +51,8 @@ defmodule YodelStudioWeb.VideoController do
     end
   end
 
-  defp create_video(conn, video_params) do
-    case Catalog.create_video(video_params) do
+  defp create_video(conn, video_params, user) do
+    case Catalog.create_video(video_params, user) do
       {:ok, video} ->
         IO.puts("created video successfully")
         IO.inspect(video)

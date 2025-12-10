@@ -7,6 +7,7 @@ defmodule YodelStudio.Catalog do
   alias YodelStudio.Repo
 
   alias YodelStudio.Catalog.Video
+  alias YodelStudio.Accounts.User
 
   @doc """
   Returns the list of videos.
@@ -49,9 +50,10 @@ defmodule YodelStudio.Catalog do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_video(attrs) do
+  def create_video(attrs, %User{} = user) do
     %Video{}
     |> Video.changeset(attrs)
+    |> Ecto.Changeset.put_assoc(:user, user)
     |> Repo.insert()
   end
 
