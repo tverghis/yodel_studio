@@ -8,8 +8,37 @@ defmodule YodelStudio.Accounts.User do
     field :hashed_password, :string, redact: true
     field :confirmed_at, :utc_datetime
     field :authenticated_at, :utc_datetime, virtual: true
+    field :username, :string
 
     timestamps(type: :utc_datetime)
+  end
+
+  def username_changeset(user, attrs, opts \\ []) do
+    user
+    |> cast(attrs, [:username])
+    |> validate_username(opts)
+  end
+
+  defp validate_username(changeset, opts) do
+    changeset =
+      changeset
+      |> validate_required([:username])
+      |> validate_length(:username,
+        min: 4,
+        max: 32,
+        message: "must be between 4 and 32 characters"
+      )
+      |> validate_format(:username, ~r/^[[:alnum:]]+$/,
+        message: "must only contain alphanumeric characters"
+      )
+
+    if Keyword.get(opts, :validate_unique, true) do
+      changeset
+      |> unsafe_validate_unique(:username, YodelStudio.Repo)
+      |> unique_constraint(:username)
+    else
+      changeset
+    end
   end
 
   @doc """

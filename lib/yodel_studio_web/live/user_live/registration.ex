@@ -24,10 +24,18 @@ defmodule YodelStudioWeb.UserLive.Registration do
 
         <.form for={@form} id="registration_form" phx-submit="save" phx-change="validate">
           <.input
+            field={@form[:username]}
+            type="text"
+            label="Username"
+            autocomplete="username"
+            required
+            phx-mounted={JS.focus()}
+          />
+          <.input
             field={@form[:email]}
             type="email"
             label="Email"
-            autocomplete="username"
+            autocomplete="email"
             required
             phx-mounted={JS.focus()}
           />
@@ -94,6 +102,7 @@ defmodule YodelStudioWeb.UserLive.Registration do
   defp registration_changeset(user, attrs) do
     user
     |> User.email_changeset(attrs, validate_unique: false)
+    |> User.username_changeset(attrs, validate_unique: false)
     |> User.password_changeset(attrs, hash_password: false)
   end
 end

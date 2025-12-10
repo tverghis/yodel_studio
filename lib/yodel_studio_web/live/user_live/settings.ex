@@ -81,6 +81,7 @@ defmodule YodelStudioWeb.UserLive.Settings do
     {:ok, socket}
   end
 
+  @impl true
   def handle_event("validate_password", params, socket) do
     %{"user" => user_params} = params
 
@@ -93,6 +94,7 @@ defmodule YodelStudioWeb.UserLive.Settings do
     {:noreply, assign(socket, password_form: password_form)}
   end
 
+  @impl true
   def handle_event("update_password", params, socket) do
     %{"user" => user_params} = params
     user = socket.assigns.current_scope.user
