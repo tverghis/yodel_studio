@@ -21,6 +21,11 @@ defmodule YodelStudioWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+  end
+
+  scope "/", YodelStudioWeb do
+    pipe_through [:browser, :require_authenticated_user]
+
     resources "/videos", VideoController
   end
 
