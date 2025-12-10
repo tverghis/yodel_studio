@@ -1,21 +1,9 @@
 defmodule YodelStudio.Accounts.UserNotifier do
-  import Swoosh.Email
-
-  alias YodelStudio.Mailer
   alias YodelStudio.Accounts.User
 
-  # Delivers the email using the application mailer.
-  defp deliver(recipient, subject, body) do
-    email =
-      new()
-      |> to(recipient)
-      |> from({"YodelStudio", "contact@example.com"})
-      |> subject(subject)
-      |> text_body(body)
-
-    with {:ok, _metadata} <- Mailer.deliver(email) do
-      {:ok, email}
-    end
+  # Email notifications disabled - using password authentication only
+  defp deliver(_recipient, _subject, _body) do
+    {:ok, nil}
   end
 
   @doc """

@@ -56,7 +56,6 @@ defmodule YodelStudioWeb.Router do
     live_session :require_authenticated_user,
       on_mount: [{YodelStudioWeb.UserAuth, :require_authenticated}] do
       live "/users/settings", UserLive.Settings, :edit
-      live "/users/settings/confirm-email/:token", UserLive.Settings, :confirm_email
     end
 
     post "/users/update-password", UserSessionController, :update_password
@@ -69,7 +68,6 @@ defmodule YodelStudioWeb.Router do
       on_mount: [{YodelStudioWeb.UserAuth, :mount_current_scope}] do
       live "/users/register", UserLive.Registration, :new
       live "/users/log-in", UserLive.Login, :new
-      live "/users/log-in/:token", UserLive.Confirmation, :new
     end
 
     post "/users/log-in", UserSessionController, :create
