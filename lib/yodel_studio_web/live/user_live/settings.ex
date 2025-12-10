@@ -12,22 +12,8 @@ defmodule YodelStudioWeb.UserLive.Settings do
       <div class="text-center">
         <.header>
           Account Settings
-          <:subtitle>Manage your account email address and password settings</:subtitle>
         </.header>
       </div>
-
-      <.form for={@email_form} id="email_form" phx-submit="update_email" phx-change="validate_email">
-        <.input
-          field={@email_form[:email]}
-          type="email"
-          label="Email"
-          autocomplete="username"
-          required
-        />
-        <.button variant="primary" phx-disable-with="Changing...">Change Email</.button>
-      </.form>
-
-      <div class="divider" />
 
       <.form
         for={@password_form}
@@ -93,19 +79,6 @@ defmodule YodelStudioWeb.UserLive.Settings do
       |> assign(:trigger_submit, false)
 
     {:ok, socket}
-  end
-
-  @impl true
-  def handle_event("validate_email", params, socket) do
-    %{"user" => user_params} = params
-
-    email_form =
-      socket.assigns.current_scope.user
-      |> Accounts.change_user_email(user_params, validate_unique: false)
-      |> Map.put(:action, :validate)
-      |> to_form()
-
-    {:noreply, assign(socket, email_form: email_form)}
   end
 
   def handle_event("update_email", params, socket) do
