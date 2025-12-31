@@ -31,6 +31,6 @@ defmodule YodelStudio.Catalog.Video do
   end
 
   def youtube_url(video) do
-    "https://youtube.com/watch?v=" <> video.slug
+    "https://www.youtube.com/watch?v=" <> video.slug
   end
 end
